@@ -1,12 +1,15 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.security.*;
 import javax.crypto.*;
 import java.util.Scanner;
 
-public class Main {
+public class Main3 {
 
     private final static String ALGORITMO = "RSA";
 
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
         //Reciba por teclado la entrada de un texto.
         Scanner scanner = new Scanner(System.in);
         System.out.println("Escriba un mensaje de texto:");
@@ -29,6 +32,16 @@ public class Main {
         PublicKey llavePublica = keyPair.getPublic();
         PrivateKey llavePrivada = keyPair.getPrivate();
 
+        FileOutputStream archivoPublico = new FileOutputStream("llavePublica");
+        ObjectOutputStream oosPublico = new ObjectOutputStream(archivoPublico);
+        oosPublico.writeObject(llavePublica);
+        oosPublico.close();
+
+        FileOutputStream archivoPrivado = new FileOutputStream("llavePrivada");
+        ObjectOutputStream oosPrivado = new ObjectOutputStream(archivoPrivado);
+        oosPrivado.writeObject(llavePrivada);
+        oosPrivado.close();
+
         //Obtenga un byte [] con el texto cifrado, invocando al me todo cifrar() de la clase Asimetrico. 
         long tiempoInicialCifrado = System.nanoTime();
         byte[] textoCifrado = Asimetrico.cifrar(llavePublica, ALGORITMO, texto);
@@ -41,6 +54,11 @@ public class Main {
         System.out.println("Input cifrado en RSA con Llaves de 1024 bits en byte[]:");
         //Imprima el texto cifrado en byte []. Utilice el me todo imprimir(). 
         imprimir(textoCifrado);
+
+        FileOutputStream archivoTextoCifrado = new FileOutputStream("textoCifrado");
+        ObjectOutputStream oosTextoCifrado = new ObjectOutputStream(archivoTextoCifrado);
+        oosTextoCifrado.writeObject(textoCifrado);
+        oosTextoCifrado.close();
 
         //Obtenga un byte [] con el texto descifrado, invocando al me todo descifrar() de la clase Asimetrico.
         long tiempoInicialDescifrado = System.nanoTime();

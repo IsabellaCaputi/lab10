@@ -2,7 +2,7 @@ import java.security.*;
 import javax.crypto.*;
 import java.util.Scanner;
 
-public class Main {
+public class Main2 {
 
     private final static String ALGORITMO = "RSA";
 
@@ -31,7 +31,7 @@ public class Main {
 
         //Obtenga un byte [] con el texto cifrado, invocando al me todo cifrar() de la clase Asimetrico. 
         long tiempoInicialCifrado = System.nanoTime();
-        byte[] textoCifrado = Asimetrico.cifrar(llavePublica, ALGORITMO, texto);
+        byte[] textoCifrado = Asimetrico.cifrar(llavePrivada, ALGORITMO, texto);
 
         long tiempoFinalCifrado = System.nanoTime();
         long tiempoCifrado = tiempoFinalCifrado - tiempoInicialCifrado;
@@ -44,7 +44,7 @@ public class Main {
 
         //Obtenga un byte [] con el texto descifrado, invocando al me todo descifrar() de la clase Asimetrico.
         long tiempoInicialDescifrado = System.nanoTime();
-        byte[] textoDescifrado = Asimetrico.descifrar(llavePrivada, ALGORITMO, textoCifrado);
+        byte[] textoDescifrado = Asimetrico.descifrar(llavePublica, ALGORITMO, textoCifrado);
 
         long tiempoFinalDescifrado = System.nanoTime();
         long tiempoDecifrado = tiempoFinalDescifrado - tiempoInicialDescifrado;
